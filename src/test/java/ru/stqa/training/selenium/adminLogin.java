@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 /**
  * Created by ilya on 25/01/2017.
  */
-public class adminLogin {
+public class AdminLogin {
     private WebDriver driver;
     @Before
     public void before(){
