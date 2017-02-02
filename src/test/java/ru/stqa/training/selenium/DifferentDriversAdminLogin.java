@@ -54,6 +54,19 @@ public class DifferentDriversAdminLogin {
         System.out.println(((HasCapabilities) driver).getCapabilities());
     }
 
+    //Firefox Nightly 52.0
+    @Test
+    public void tryFirefoxNightly(){
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability(FirefoxDriver.MARIONETTE, true);
+
+        driver = new FirefoxDriver(
+                new FirefoxBinary(new File("/Applications/Firefox 3.app/Contents/MacOS/firefox-bin")),
+                new FirefoxProfile(),
+                caps);
+        System.out.println(((HasCapabilities) driver).getCapabilities());
+    }
+
     //Safari > Preferences, click Advanced, then select “Show Develop menu in menu bar.”
     //Develop > Allow Remote Automation
     @Test
