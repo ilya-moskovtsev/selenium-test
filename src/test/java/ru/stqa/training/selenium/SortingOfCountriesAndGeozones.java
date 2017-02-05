@@ -34,9 +34,7 @@ public class SortingOfCountriesAndGeozones {
     @Test
     public void countriesAndGeozonesShouldBeSorted() {
         driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
+        login();
 
         List<WebElement> countryRows = driver.findElements(By.cssSelector("tr.row"));
         List<String> checkCountrySort = new ArrayList<>();
@@ -80,9 +78,48 @@ public class SortingOfCountriesAndGeozones {
 
     }
 
+    @Test
+    public void geozonesShouldBeSorted(){
+        driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+        login();
+        List<String> urls = new ArrayList<>();
+        List<WebElement> countryNames = driver.findElements(By.cssSelector("tr.row td:nth-of-type(3) a"));
+        List<WebElement> selectedZoneOptions;
+        List<String> checkZonesSort;
+        List<String> sortedZones;
+        for (WebElement link : countryNames ) {
+            urls.add(link.getAttribute("href"));
+        }
+
+        for (String url : urls) {
+            driver.get(url);
+
+            selectedZoneOptions = driver.findElements(By.cssSelector("#table-zones td:nth-of-type(3) option[selected]"));
+            checkZonesSort = new ArrayList<>();
+            sortedZones = new ArrayList<>();
+
+            for (WebElement selectedZoneOption : selectedZoneOptions) {
+                checkZonesSort.add(selectedZoneOption.getText());
+            }
+
+            sortedZones.addAll(checkZonesSort);
+            Collections.sort(sortedZones);
+
+            for (int i = 0; i < checkZonesSort.size(); i++) {
+                assertTrue(checkZonesSort.get(i).equals(sortedZones.get(i)));
+            }
+        }
+    }
+
     @After
     public void after(){
         driver.quit();
         driver = null;
+    }
+
+    private void login() {
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
     }
 }
