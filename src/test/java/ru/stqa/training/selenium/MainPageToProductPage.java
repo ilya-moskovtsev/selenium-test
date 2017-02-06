@@ -1,45 +1,46 @@
 package ru.stqa.training.selenium;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
 /**
  * Created by ilya on 05/02/2017.
  */
+@RunWith(Parameterized.class)
 public class MainPageToProductPage {
+    @Parameters
+    public static List<WebDriver> data() {
+        return Arrays.asList(new WebDriver[]{
+                new ChromeDriver(),
+                new SafariDriver(),
+                new FirefoxDriver()
+        });
+    }
+
     private WebDriver driver;
 
-    @Before
-    public void before()
-    {
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("start-fullscreen");
-//        driver = new ChromeDriver(chromeOptions);
-
-//        driver = new FirefoxDriver();
-
-        driver = new SafariDriver();
+    public MainPageToProductPage(WebDriver driver){
+        this.driver = driver;
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
-        driver.manage().window().maximize();
-
-
-
     }
+
 
     @Test
     public void productShouldHaveCorrectPage()
