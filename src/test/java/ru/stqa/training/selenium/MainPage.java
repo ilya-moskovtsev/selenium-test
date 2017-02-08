@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import test.utils.Url;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +27,7 @@ public class MainPage {
         chromeOptions.addArguments("start-fullscreen");
         driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        driver.get("http://localhost/litecart/");
+        driver.get(Url.MAIN.toString());
     }
 
     @Test

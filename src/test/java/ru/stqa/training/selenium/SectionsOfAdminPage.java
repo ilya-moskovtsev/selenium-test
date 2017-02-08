@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import test.utils.Url;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -36,12 +37,12 @@ public class SectionsOfAdminPage {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("start-fullscreen");
         driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
     @Test
     public void pageHeaderShouldBePresent() {
-        driver.get("http://localhost/litecart/admin/");
+        driver.get(Url.ADMIN.toString());
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("login")).click();

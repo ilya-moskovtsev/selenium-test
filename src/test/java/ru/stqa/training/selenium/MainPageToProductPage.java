@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import test.utils.Url;
 
 /**
  * Created by ilya on 05/02/2017.
@@ -45,7 +46,7 @@ public class MainPageToProductPage {
     @Test
     public void productShouldHaveCorrectPage()
     {
-        driver.get("http://localhost/litecart/");
+        driver.get(Url.MAIN.toString());
         WebElement product1 = driver.findElement(By.cssSelector("#box-campaigns li"));
         String name1 = product1.findElement(By.cssSelector(".name")).getText();
 
