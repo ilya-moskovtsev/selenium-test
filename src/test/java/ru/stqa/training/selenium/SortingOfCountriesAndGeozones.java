@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import test.utils.Login;
+import test.utils.Url;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,8 +35,7 @@ public class SortingOfCountriesAndGeozones {
 
     @Test
     public void countriesAndGeozonesShouldBeSorted() {
-        driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
-        login();
+        Login.adminLogin(driver, Url.ADMIN_COUNTRIES);
 
         List<WebElement> countryRows = driver.findElements(By.cssSelector("tr.row"));
         List<String> checkCountrySort = new ArrayList<>();
@@ -80,8 +81,8 @@ public class SortingOfCountriesAndGeozones {
 
     @Test
     public void geozonesShouldBeSorted(){
-        driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
-        login();
+        Login.adminLogin(driver, Url.ADMIN_GEO_ZONES);
+
         List<String> urls = new ArrayList<>();
         List<WebElement> countryNames = driver.findElements(By.cssSelector("tr.row td:nth-of-type(3) a"));
         List<WebElement> selectedZoneOptions;
@@ -115,11 +116,5 @@ public class SortingOfCountriesAndGeozones {
     public void after(){
         driver.quit();
         driver = null;
-    }
-
-    private void login() {
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
     }
 }

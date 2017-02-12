@@ -12,8 +12,14 @@ public enum Url {
 
     ADMIN {
         public String toString() {
-            return "http://localhost/litecart/admin/";
-        }
+            return "http://localhost/litecart/admin/";}
+    },
+    ADMIN_COUNTRIES{
+        public String toString () {
+            return "http://localhost/litecart/admin/?app=countries&doc=countries";}
+    },
+    ADMIN_GEO_ZONES{
+        public String toString () {
+            return "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";}
     }
-
 }

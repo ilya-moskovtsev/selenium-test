@@ -13,6 +13,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
+import test.utils.Login;
+import test.utils.Url;
 
 import java.io.File;
 
@@ -75,10 +77,7 @@ public class DifferentDriversAdminLogin {
 
     @After
     public void after(){
-        driver.get("http://localhost/litecart/admin/");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
+        Login.adminLogin(driver, Url.ADMIN);
         driver.quit();
         driver = null;
     }
