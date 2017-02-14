@@ -91,6 +91,5 @@ public class Cart {
     public void after() {
         driver.quit();
         driver = null;
-
     }
 }
