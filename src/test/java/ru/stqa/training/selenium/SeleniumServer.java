@@ -11,6 +11,9 @@ import test.utils.Url;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static org.openqa.selenium.Platform.MAC;
+import static org.openqa.selenium.Platform.WINDOWS;
+
 /**
  * Created by ilya on 17/02/2017.
  */
@@ -19,7 +22,11 @@ public class SeleniumServer {
 
     @Before
     public void before() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://172.16.62.142:4444/wd/hub"), DesiredCapabilities.chrome());
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+//        capabilities.setPlatform(WINDOWS);
+        capabilities.setPlatform(MAC);
+        capabilities.setBrowserName("chrome");
+        driver = new RemoteWebDriver(new URL("http://192.168.1.68:4444/wd/hub"), capabilities);
     }
 
     @Test
