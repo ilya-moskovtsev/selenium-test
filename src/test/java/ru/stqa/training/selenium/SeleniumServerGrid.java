@@ -17,27 +17,34 @@ import static org.openqa.selenium.Platform.WINDOWS;
 /**
  * Created by ilya on 17/02/2017.
  */
-public class SeleniumServer {
-    WebDriver driver;
+public class SeleniumServerGrid {
+    WebDriver driver1;
+    WebDriver driver2;
 
     @Before
     public void before() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setPlatform(WINDOWS);
-        capabilities.setPlatform(MAC);
         capabilities.setBrowserName("chrome");
-        driver = new RemoteWebDriver(new URL("http://192.168.1.68:4444/wd/hub"), capabilities);
+
+        capabilities.setPlatform(MAC);
+        driver1 = new RemoteWebDriver(new URL("http://192.168.1.68:4444/wd/hub"), capabilities);
+
+        capabilities.setPlatform(WINDOWS);
+        driver2 = new RemoteWebDriver(new URL("http://192.168.1.68:4444/wd/hub"), capabilities);
     }
 
     @Test
     public void tryRemoteWebDriver(){
-        driver.get(Url.MAIN.toString());
+        driver1.get(Url.MAIN.toString());
+        driver2.get(Url.MAIN.toString());
     }
 
     @After
     public void after(){
-        driver.quit();
-        driver = null;
+        driver1.quit();
+        driver1 = null;
+        driver2.quit();
+        driver2 = null;
     }
 
 }
