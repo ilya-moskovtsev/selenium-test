@@ -13,20 +13,14 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 /**
  * Created by ilya on 24/01/2017.
  */
-public class MyFirstTest {
-    private WebDriver driver;
-    private WebDriverWait wait;
-
+public class MyFirstTest extends TestBase{
     @Before
-    public void before()
-    {
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10);
+    public void before() {
+        super.before();
     }
 
     @Test
     public void test(){
-        driver.manage().window().maximize();
         driver.get("https://google.com");
         driver.findElement(By.name("q")).sendKeys("webdriver");
         driver.findElement(By.name("btnG")).click();
@@ -35,7 +29,6 @@ public class MyFirstTest {
 
     @After
     public void after(){
-        driver.quit();
-        driver = null;
+        super.after();
     }
 }
