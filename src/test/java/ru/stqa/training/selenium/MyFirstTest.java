@@ -27,6 +27,17 @@ public class MyFirstTest extends TestBase{
         wait.until(titleIs("webdriver - Google Search"));
     }
 
+    /**
+     * Get Browser Logs
+     */
+    @Test
+    public void getBrowserLogs(){
+        driver.get("http://selenium2.ru");
+        System.out.println(driver.manage().logs().getAvailableLogTypes());
+        driver.manage().logs().get("browser").forEach(l -> System.out.println(l));
+        driver.manage().logs().get("performance").forEach(l -> System.out.println(l));
+    }
+
     @After
     public void after(){
         super.after();
