@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import test.utils.Login;
 import test.utils.Url;
 
 import java.util.List;
@@ -42,10 +43,7 @@ public class SectionsOfAdminPage {
 
     @Test
     public void pageHeaderShouldBePresent() {
-        driver.get(Url.ADMIN.toString());
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
+        Login.adminLogin(driver, Url.ADMIN);
 
         apps = driver.findElements(By.cssSelector("li#app-"));
         for (int i = 0; i < apps.size(); i++) {
