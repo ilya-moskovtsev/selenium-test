@@ -8,6 +8,8 @@ import test.utils.Url;
 
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * [x] Задание 17. Проверьте отсутствие сообщений в логе браузера
  * <br>
@@ -41,13 +43,14 @@ public class AdminCatalogProducts extends TestBase {
         // 2) открыть каталог, категорию, которая содержит товары
         Login.adminLogin(driver, Url.ADMIN_CATALOG);
         driver.manage().logs().get("browser").forEach(l -> System.out.println(l));
-
+        assertTrue(driver.manage().logs().get("browser").getAll().isEmpty());
         // 3) последовательно открывать страницы товаров и проверять, не появляются ли в логе браузера сообщения (любого уровня)
         List<WebElement> pencils = driver.findElements(By.cssSelector(".fa-pencil"));
         for (int i = 0; i < pencils.size(); i++) {
             pencils = driver.findElements(By.cssSelector(".fa-pencil"));
             pencils.get(i).click();
             driver.manage().logs().get("browser").forEach(l -> System.out.println(l));
+            assertTrue(driver.manage().logs().get("browser").getAll().isEmpty());
             driver.navigate().back();
         }
     }
