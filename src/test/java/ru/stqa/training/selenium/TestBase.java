@@ -1,6 +1,9 @@
 package ru.stqa.training.selenium;
 
 import com.google.common.io.Files;
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
@@ -21,6 +24,7 @@ public class TestBase {
     public static ThreadLocal<EventFiringWebDriver> tlDriver = new ThreadLocal<>();
     public EventFiringWebDriver driver;
     public WebDriverWait wait;
+    public BrowserMobProxy proxy;
 
     /**
      * Протоколирование действий Selenium
@@ -67,6 +71,17 @@ public class TestBase {
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
         cap.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+
+        /**
+         * Try BrowserMobProxy
+         */
+        // start the proxy
+        proxy = new BrowserMobProxyServer();
+        proxy.start(0);
+        // get the Selenium proxy object
+        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+        // configure it as a desired capability
+        cap.setCapability(CapabilityType.PROXY, seleniumProxy);
 
         driver = new EventFiringWebDriver(new ChromeDriver(cap));
         driver.register(new MyListener());

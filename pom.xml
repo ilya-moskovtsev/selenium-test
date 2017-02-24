@@ -26,7 +26,15 @@
         <artifactId>selenium-java</artifactId>
         <version>3.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>net.lightbody.bmp</groupId>
+            <artifactId>browsermob-core</artifactId>
+            <version>2.1.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+
 
 
 </project>
