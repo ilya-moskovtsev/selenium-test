@@ -3,6 +3,7 @@ package ru.stqa.training.selenium;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntries;
 import test.utils.Login;
 import test.utils.Url;
 
@@ -42,15 +43,18 @@ public class AdminCatalogProducts extends TestBase {
         // 1) зайти в админку
         // 2) открыть каталог, категорию, которая содержит товары
         Login.adminLogin(driver, Url.ADMIN_CATALOG);
-        driver.manage().logs().get("browser").forEach(l -> System.out.println(l));
-        assertTrue(driver.manage().logs().get("browser").getAll().isEmpty());
+        // сохраняем логи в переменную, т.к. получение логов очищает список
+        LogEntries catalogLogEntries = driver.manage().logs().get("browser");
+        catalogLogEntries.forEach(l -> System.out.println(l));
+        assertTrue(catalogLogEntries.getAll().isEmpty());
         // 3) последовательно открывать страницы товаров и проверять, не появляются ли в логе браузера сообщения (любого уровня)
         List<WebElement> pencils = driver.findElements(By.cssSelector(".fa-pencil"));
         for (int i = 0; i < pencils.size(); i++) {
             pencils = driver.findElements(By.cssSelector(".fa-pencil"));
             pencils.get(i).click();
-            driver.manage().logs().get("browser").forEach(l -> System.out.println(l));
-            assertTrue(driver.manage().logs().get("browser").getAll().isEmpty());
+            LogEntries productLogEntries = driver.manage().logs().get("browser");
+            productLogEntries.forEach(l -> System.out.println(l));
+            assertTrue(productLogEntries.getAll().isEmpty());
             driver.navigate().back();
         }
     }
