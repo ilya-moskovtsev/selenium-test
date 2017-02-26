@@ -8,16 +8,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
+import test.utils.Login;
 import test.utils.Url;
 import test.utils.User;
 
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by ilya on 08/02/2017.
  */
-public class UserRegistration {
+public class CustomerRegistration {
     private WebDriver driver;
     final Random random = new Random();
     private User user;
@@ -32,7 +38,14 @@ public class UserRegistration {
     }
 
     @Test
-    public void userRegistration(){
+    public void customerRegistration(){
+        Login.adminLogin(driver, Url.ADMIN_CUSTOMERS);
+
+        //сохраняем список идентификаторов существующих клиентов до регистрации нового
+        Set<String> oldCustomerIds = driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
+                .map(e -> e.findElements(By.tagName("td")).get(2).getText())
+                .collect(toSet());
+
         driver.get(Url.MAIN.toString());
         driver.findElement(By.cssSelector("form[name=login_form] a")).click();
 
@@ -56,13 +69,22 @@ public class UserRegistration {
 
         driver.findElement(By.cssSelector("button[name=create_account")).click();
 
-        driver.findElement(By.linkText("Logout")).click();
+        driver.get(Url.ADMIN_CUSTOMERS.toString());
+        //сохраняем список идентификаторов существующих клиентов после регистрации нового
+        Set<String> newCustomerIds = driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
+                .map(e -> e.findElements(By.tagName("td")).get(2).getText())
+                .collect(toSet());
 
-        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(user.getEmail());
-        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(user.getPassword());
-        driver.findElement(By.cssSelector("button[name=login")).click();
+        assertTrue(newCustomerIds.containsAll(oldCustomerIds));
+        assertTrue(newCustomerIds.size() == oldCustomerIds.size() + 1);
 
-        driver.findElement(By.linkText("Logout")).click();
+//        driver.findElement(By.linkText("Logout")).click();
+//
+//        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(user.getEmail());
+//        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(user.getPassword());
+//        driver.findElement(By.cssSelector("button[name=login")).click();
+//
+//        driver.findElement(By.linkText("Logout")).click();
     }
 
     @After

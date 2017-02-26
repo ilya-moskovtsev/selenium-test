@@ -25,5 +25,9 @@ public enum Url {
     ADMIN_CATALOG{
         public String toString () {
             return "http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1";}
+    },
+    ADMIN_CUSTOMERS{
+        public String toString () {
+            return "http://localhost/litecart/admin/?app=customers&doc=customers";}
     }
 }
