@@ -9,8 +9,10 @@ import org.openqa.selenium.WebDriver;
 public class Login {
     public static void adminLogin(WebDriver driver, Url url) {
         driver.get(url.toString());
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("login")).click();
+        if (driver.findElements(By.id("box-login")).size() > 0) {
+            driver.findElement(By.name("username")).sendKeys("admin");
+            driver.findElement(By.name("password")).sendKeys("admin");
+            driver.findElement(By.name("login")).click();
+        }
     }
 }
