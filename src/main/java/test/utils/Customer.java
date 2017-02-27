@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by ilya on 08/02/2017.
  */
-public class User {
+public class Customer {
     private String firstname;
     private String lastname;
     private String address1;
@@ -15,7 +15,7 @@ public class User {
     private String phone;
     private String password;
 
-    public User() {
+    public Customer() {
         final Random random = new Random();
         this.firstname = "Firstname" + random.nextInt(100);
         this.lastname = "Lastname" + random.nextInt(100);

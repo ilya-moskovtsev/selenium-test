@@ -8,14 +8,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
+import test.utils.Customer;
 import test.utils.Login;
 import test.utils.Url;
-import test.utils.User;
 
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.assertTrue;
@@ -26,11 +25,11 @@ import static org.junit.Assert.assertTrue;
 public class CustomerRegistration {
     private WebDriver driver;
     final Random random = new Random();
-    private User user;
+    private Customer customer;
 
     @Before
     public void setup(){
-        user = new User();
+        customer = new Customer();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("start-fullscreen");
         driver = new ChromeDriver();
@@ -45,23 +44,23 @@ public class CustomerRegistration {
         driver.get(Url.MAIN.toString());
         driver.findElement(By.cssSelector("form[name=login_form] a")).click();
 
-        driver.findElement(By.cssSelector("input[name=firstname]")).sendKeys(user.getFirstname());
-        driver.findElement(By.cssSelector("input[name=lastname]")).sendKeys(user.getLastname());
+        driver.findElement(By.cssSelector("input[name=firstname]")).sendKeys(customer.getFirstname());
+        driver.findElement(By.cssSelector("input[name=lastname]")).sendKeys(customer.getLastname());
 
-        driver.findElement(By.cssSelector("input[name=address1]")).sendKeys(user.getAddress1());
-        driver.findElement(By.cssSelector("input[name=postcode]")).sendKeys(user.getPostcode());
+        driver.findElement(By.cssSelector("input[name=address1]")).sendKeys(customer.getAddress1());
+        driver.findElement(By.cssSelector("input[name=postcode]")).sendKeys(customer.getPostcode());
 
-        driver.findElement(By.cssSelector("input[name=city]")).sendKeys(user.getCity());
+        driver.findElement(By.cssSelector("input[name=city]")).sendKeys(customer.getCity());
         Select countrySelect = new Select(driver.findElement(By.cssSelector("select[name=country_code]")));
         countrySelect.selectByVisibleText("United States");
         Select zoneSelect = new Select((driver.findElement(By.cssSelector("select[name=zone_code]"))));
         zoneSelect.selectByIndex(random.nextInt(zoneSelect.getOptions().size()));
 
-        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(user.getEmail());
-        driver.findElement(By.cssSelector("input[name=phone]")).sendKeys(user.getPhone());
+        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(customer.getEmail());
+        driver.findElement(By.cssSelector("input[name=phone]")).sendKeys(customer.getPhone());
 
-        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(user.getPassword());
-        driver.findElement(By.cssSelector("input[name=confirmed_password]")).sendKeys(user.getPassword());
+        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(customer.getPassword());
+        driver.findElement(By.cssSelector("input[name=confirmed_password]")).sendKeys(customer.getPassword());
 
         driver.findElement(By.cssSelector("button[name=create_account")).click();
 
@@ -75,8 +74,8 @@ public class CustomerRegistration {
 
 //        driver.findElement(By.linkText("Logout")).click();
 //
-//        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(user.getEmail());
-//        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(user.getPassword());
+//        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(customer.getEmail());
+//        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(customer.getPassword());
 //        driver.findElement(By.cssSelector("button[name=login")).click();
 //
 //        driver.findElement(By.linkText("Logout")).click();
