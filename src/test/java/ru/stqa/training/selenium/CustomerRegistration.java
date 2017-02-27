@@ -39,12 +39,8 @@ public class CustomerRegistration {
 
     @Test
     public void customerRegistration(){
-        Login.adminLogin(driver, Url.ADMIN_CUSTOMERS);
-
-        //сохраняем список идентификаторов существующих клиентов до регистрации нового
-        Set<String> oldCustomerIds = driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
-                .map(e -> e.findElements(By.tagName("td")).get(2).getText())
-                .collect(toSet());
+        //сохраняем множество идентификаторов существующих клиентов до регистрации нового
+        Set<String> oldCustomerIds = getCustomerIds();
 
         driver.get(Url.MAIN.toString());
         driver.findElement(By.cssSelector("form[name=login_form] a")).click();
@@ -69,13 +65,12 @@ public class CustomerRegistration {
 
         driver.findElement(By.cssSelector("button[name=create_account")).click();
 
-        driver.get(Url.ADMIN_CUSTOMERS.toString());
-        //сохраняем список идентификаторов существующих клиентов после регистрации нового
-        Set<String> newCustomerIds = driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
-                .map(e -> e.findElements(By.tagName("td")).get(2).getText())
-                .collect(toSet());
+        //сохраняем множество идентификаторов существующих клиентов после регистрации нового
+        Set<String> newCustomerIds = getCustomerIds();
 
+        //проверяем, что клиенты существовавшие до добавления нового никуда не делись
         assertTrue(newCustomerIds.containsAll(oldCustomerIds));
+        //проверяем, что в множестве появился новый клиент
         assertTrue(newCustomerIds.size() == oldCustomerIds.size() + 1);
 
 //        driver.findElement(By.linkText("Logout")).click();
@@ -85,6 +80,13 @@ public class CustomerRegistration {
 //        driver.findElement(By.cssSelector("button[name=login")).click();
 //
 //        driver.findElement(By.linkText("Logout")).click();
+    }
+
+    private Set<String> getCustomerIds() {
+        Login.adminLogin(driver, Url.ADMIN_CUSTOMERS);
+        return driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
+                    .map(e -> e.findElements(By.tagName("td")).get(2).getText())
+                    .collect(toSet());
     }
 
     @After
