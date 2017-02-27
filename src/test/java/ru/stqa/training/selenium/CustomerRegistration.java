@@ -41,6 +41,26 @@ public class CustomerRegistration {
         //сохраняем множество идентификаторов существующих клиентов до регистрации нового
         Set<String> oldCustomerIds = getCustomerIds();
 
+        registerNewCustomer(customer);
+
+        //сохраняем множество идентификаторов существующих клиентов после регистрации нового
+        Set<String> newCustomerIds = getCustomerIds();
+
+        //проверяем, что клиенты существовавшие до добавления нового никуда не делись
+        assertTrue(newCustomerIds.containsAll(oldCustomerIds));
+        //проверяем, что в множестве появился новый клиент
+        assertTrue(newCustomerIds.size() == oldCustomerIds.size() + 1);
+
+//        driver.findElement(By.linkText("Logout")).click();
+//
+//        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(customer.getEmail());
+//        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(customer.getPassword());
+//        driver.findElement(By.cssSelector("button[name=login")).click();
+//
+//        driver.findElement(By.linkText("Logout")).click();
+    }
+
+    private void registerNewCustomer(Customer customer) {
         driver.get(Url.MAIN.toString());
         driver.findElement(By.cssSelector("form[name=login_form] a")).click();
 
@@ -63,22 +83,6 @@ public class CustomerRegistration {
         driver.findElement(By.cssSelector("input[name=confirmed_password]")).sendKeys(customer.getPassword());
 
         driver.findElement(By.cssSelector("button[name=create_account")).click();
-
-        //сохраняем множество идентификаторов существующих клиентов после регистрации нового
-        Set<String> newCustomerIds = getCustomerIds();
-
-        //проверяем, что клиенты существовавшие до добавления нового никуда не делись
-        assertTrue(newCustomerIds.containsAll(oldCustomerIds));
-        //проверяем, что в множестве появился новый клиент
-        assertTrue(newCustomerIds.size() == oldCustomerIds.size() + 1);
-
-//        driver.findElement(By.linkText("Logout")).click();
-//
-//        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(customer.getEmail());
-//        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(customer.getPassword());
-//        driver.findElement(By.cssSelector("button[name=login")).click();
-//
-//        driver.findElement(By.linkText("Logout")).click();
     }
 
     private Set<String> getCustomerIds() {
