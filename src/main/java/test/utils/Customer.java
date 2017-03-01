@@ -11,20 +11,26 @@ public class Customer {
     private String address1;
     private String postcode;
     private String city;
+    private String country;
+    private String zone;
     private String email;
     private String phone;
     private String password;
 
-    public Customer() {
-        final Random random = new Random();
-        this.firstname = "Firstname" + random.nextInt(100);
-        this.lastname = "Lastname" + random.nextInt(100);
-        this.address1 = "Address" + random.nextInt(100);;
-        this.postcode = String.valueOf(10000 + random.nextInt(89999));
-        this.city = "City" + random.nextInt(100);
-        this.email = "email" + random.nextInt(100) + "@email.com";
-        this.phone = String.valueOf(1000000000 + random.nextInt(999999999));
-        this.password = "password" + random.nextInt(100);
+    public static Builder newEntity() { return new Customer().new Builder(); }
+    public class Builder {
+        private Builder() {}
+        public Builder withFirstname(String firstname) { Customer.this.firstname = firstname; return this; }
+        public Builder withLastname(String lastname) { Customer.this.lastname = lastname; return this; }
+        public Builder withAddress(String address1) { Customer.this.address1 = address1; return this; }
+        public Builder withPostcode(String postcode) { Customer.this.postcode = postcode; return this; }
+        public Builder withCity(String city) { Customer.this.city = city; return this; }
+//        public Builder withCountry(String country) { Customer.this.country = country; return this; }
+//        public Builder withZone(String zone) { Customer.this.zone = zone; return this; }
+        public Builder withEmail(String email) { Customer.this.email = email; return this; }
+        public Builder withPhone(String phone) { Customer.this.phone = phone; return this; }
+        public Builder withPassword(String password) { Customer.this.password = password; return this; }
+        public Customer build() {return Customer.this; }
     }
 
     public String getFirstname() {

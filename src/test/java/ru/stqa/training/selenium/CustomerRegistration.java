@@ -1,8 +1,11 @@
 package ru.stqa.training.selenium;
 
-import org.junit.Before;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import test.utils.Customer;
+import test.utils.DataProviders;
 
 import java.util.Set;
 
@@ -11,16 +14,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by ilya on 08/02/2017.
  */
+@RunWith(DataProviderRunner.class)
 public class CustomerRegistration extends TestBase{
-    private Customer customer;
-
-    @Before
-    public void setup(){
-        customer = new Customer();
-    }
 
     @Test
-    public void customerRegistration(){
+    @UseDataProvider(value = "validCustomer", location = DataProviders.class)
+    public void customerRegistration(Customer customer){
         //сохраняем множество идентификаторов существующих клиентов до регистрации нового
         Set<String> oldCustomerIds = app.getCustomerIds();
 
