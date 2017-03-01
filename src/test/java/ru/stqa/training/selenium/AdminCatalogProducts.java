@@ -33,34 +33,25 @@ import static org.junit.Assert.assertTrue;
  * Уложите созданный файл, содержащий сценарий, в ранее созданный репозиторий. В качестве ответа на задание отправьте ссылку на свой репозиторий и указание, какой именно файл содержит нужный сценарий.Created by ilya on 21/02/2017.
  */
 public class AdminCatalogProducts extends TestBase {
-    @Override
-    public void before() {
-        super.before();
-    }
 
     @Test
-    public void getBrowserLogs(){
+    public void browserLogsShouldBeEmpty(){
         // 1) зайти в админку
         // 2) открыть каталог, категорию, которая содержит товары
-        Login.adminLogin(driver, Url.ADMIN_CATALOG);
+        Login.adminLogin(app.getDriver(), Url.ADMIN_CATALOG);
         // сохраняем логи в переменную, т.к. получение логов очищает список
-        LogEntries catalogLogEntries = driver.manage().logs().get("browser");
+        LogEntries catalogLogEntries = app.getDriver().manage().logs().get("browser");
         catalogLogEntries.forEach(l -> System.out.println(l));
         assertTrue(catalogLogEntries.getAll().isEmpty());
         // 3) последовательно открывать страницы товаров и проверять, не появляются ли в логе браузера сообщения (любого уровня)
-        List<WebElement> pencils = driver.findElements(By.cssSelector(".fa-pencil"));
+        List<WebElement> pencils = app.getDriver().findElements(By.cssSelector(".fa-pencil"));
         for (int i = 0; i < pencils.size(); i++) {
-            pencils = driver.findElements(By.cssSelector(".fa-pencil"));
+            pencils = app.getDriver().findElements(By.cssSelector(".fa-pencil"));
             pencils.get(i).click();
-            LogEntries productLogEntries = driver.manage().logs().get("browser");
+            LogEntries productLogEntries = app.getDriver().manage().logs().get("browser");
             productLogEntries.forEach(l -> System.out.println(l));
             assertTrue(productLogEntries.getAll().isEmpty());
-            driver.navigate().back();
+            app.getDriver().navigate().back();
         }
-    }
-
-    @Override
-    public void after() {
-        super.after();
     }
 }
