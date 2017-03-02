@@ -29,6 +29,7 @@ public class Application {
     private WebDriverWait wait;
     public BrowserMobProxy proxy;
     private RegistrationPage registrationPage;
+    private CustomersListPage customersListPage;
 
     public EventFiringWebDriver getDriver() {
         return driver;
@@ -58,6 +59,7 @@ public class Application {
         driver.register(new MyListener());
         wait = new WebDriverWait(driver, 10);
         registrationPage = new RegistrationPage(driver);
+        customersListPage = new CustomersListPage(driver);
     }
 
     public void quit(){ driver.quit(); driver = null;}
@@ -86,10 +88,8 @@ public class Application {
     }
 
     public Set<String> getCustomerIds() {
-        Login.adminLogin(driver, Url.ADMIN_CUSTOMERS);
-        return driver.findElements(By.cssSelector("table.dataTable tr.row")).stream()
-                .map(e -> e.findElements(By.tagName("td")).get(2).getText())
-                .collect(toSet());
+        Login.adminLogin(driver, Url.ADMIN);
+        return customersListPage.open().getCustomerIds();
     }
 
     public void googleSearch(String searchFor) {
