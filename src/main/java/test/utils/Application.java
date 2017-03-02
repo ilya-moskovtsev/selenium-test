@@ -28,6 +28,7 @@ public class Application {
     private EventFiringWebDriver driver;
     private WebDriverWait wait;
     public BrowserMobProxy proxy;
+    private RegistrationPage registrationPage;
 
     public EventFiringWebDriver getDriver() {
         return driver;
@@ -56,34 +57,32 @@ public class Application {
         driver = new EventFiringWebDriver(new ChromeDriver(cap));
         driver.register(new MyListener());
         wait = new WebDriverWait(driver, 10);
+        registrationPage = new RegistrationPage(driver);
     }
 
     public void quit(){ driver.quit(); driver = null;}
 
     public void registerNewCustomer(Customer customer) {
-        driver.get(Url.MAIN.toString());
-        driver.findElement(By.cssSelector("form[name=login_form] a")).click();
+        registrationPage.open();
 
-        driver.findElement(By.cssSelector("input[name=firstname]")).sendKeys(customer.getFirstname());
-        driver.findElement(By.cssSelector("input[name=lastname]")).sendKeys(customer.getLastname());
+        registrationPage.firstnameInput().sendKeys(customer.getFirstname());
+        registrationPage.lastnameInput().sendKeys(customer.getLastname());
 
-        driver.findElement(By.cssSelector("input[name=address1]")).sendKeys(customer.getAddress1());
-        driver.findElement(By.cssSelector("input[name=postcode]")).sendKeys(customer.getPostcode());
+        registrationPage.address1Input().sendKeys(customer.getAddress1());
 
-        driver.findElement(By.cssSelector("input[name=city]")).sendKeys(customer.getCity());
-        Select countrySelect = new Select(driver.findElement(By.cssSelector("select[name=country_code]")));
-        countrySelect.selectByVisibleText("United States");
-        Select zoneSelect = new Select((driver.findElement(By.cssSelector("select[name=zone_code]"))));
-        final Random random = new Random();
-        zoneSelect.selectByIndex(random.nextInt(zoneSelect.getOptions().size()));
+        registrationPage.postcodeInput().sendKeys(customer.getPostcode());
+        registrationPage.cityInput().sendKeys(customer.getCity());
 
-        driver.findElement(By.cssSelector("input[name=email]")).sendKeys(customer.getEmail());
-        driver.findElement(By.cssSelector("input[name=phone]")).sendKeys(customer.getPhone());
+        registrationPage.countrySelect();
+        registrationPage.zoneSelect();
 
-        driver.findElement(By.cssSelector("input[name=password]")).sendKeys(customer.getPassword());
-        driver.findElement(By.cssSelector("input[name=confirmed_password]")).sendKeys(customer.getPassword());
+        registrationPage.emailInput().sendKeys(customer.getEmail());
+        registrationPage.phoneInput().sendKeys(customer.getPhone());
 
-        driver.findElement(By.cssSelector("button[name=create_account")).click();
+        registrationPage.passwordInput().sendKeys(customer.getPassword());
+        registrationPage.confirmedPasswordInput().sendKeys(customer.getPassword());
+
+        registrationPage.createAccountButton().click();
     }
 
     public Set<String> getCustomerIds() {
