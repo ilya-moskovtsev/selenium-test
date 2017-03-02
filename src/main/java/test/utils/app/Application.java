@@ -6,16 +6,18 @@ import net.lightbody.bmp.client.ClientUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import test.utils.*;
+import test.utils.Login;
+import test.utils.MyListener;
+import test.utils.Url;
 import test.utils.model.Customer;
-import test.utils.pages.CustomersListPage;
-import test.utils.pages.RegistrationPage;
+import test.utils.pages.*;
 
 import java.util.Set;
 import java.util.logging.Level;
@@ -29,8 +31,12 @@ public class Application {
     private EventFiringWebDriver driver;
     private WebDriverWait wait;
     public BrowserMobProxy proxy;
+    private MainPage mainPage;
+    private ProductPage productPage;
+    private CartPage cartPage;
     private RegistrationPage registrationPage;
     private CustomersListPage customersListPage;
+    private int implicitlyWait = 1;
 
     public EventFiringWebDriver getDriver() {
         return driver;
@@ -41,7 +47,10 @@ public class Application {
     }
 
     public Application() {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("start-fullscreen");
         DesiredCapabilities cap = DesiredCapabilities.chrome();
+        cap.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
         cap.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
@@ -59,6 +68,9 @@ public class Application {
         driver = new EventFiringWebDriver(new ChromeDriver(cap));
         driver.register(new MyListener());
         wait = new WebDriverWait(driver, 10);
+        mainPage = new MainPage(driver);
+        productPage = new ProductPage(driver);
+        cartPage = new CartPage(driver);
         registrationPage = new RegistrationPage(driver);
         customersListPage = new CustomersListPage(driver);
     }
@@ -105,5 +117,21 @@ public class Application {
         System.out.println("Available log types -> " + driver.manage().logs().getAvailableLogTypes());
         System.out.println("Printing log type -> " + logType);
         driver.manage().logs().get(logType).forEach(l -> System.out.println(l));
+    }
+
+    public void addProductsToCart(){
+
+        for (int i = 0; i < 3; i++) {
+            //1) открыть главную страницу
+            mainPage.open();
+            //2) открыть первый товар из списка
+            mainPage.selectFirstProduct();
+            productPage.addProductToCart();
+            //5) вернуться на главную страницу, повторить предыдущие шаги ещё два раза, чтобы в общей сложности в корзине было 3 единицы товара
+        }
+    }
+
+    public void deleteAllProductsFromCart(){
+        cartPage.deleteAllProductsFromCart();
     }
 }
