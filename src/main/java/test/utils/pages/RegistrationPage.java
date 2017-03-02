@@ -1,9 +1,10 @@
-package test.utils;
+package test.utils.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import test.utils.pages.Page;
 
 import java.util.Random;
 

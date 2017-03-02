@@ -1,6 +1,4 @@
-package test.utils;
-
-import java.util.Random;
+package test.utils.model;
 
 /**
  * Created by ilya on 08/02/2017.

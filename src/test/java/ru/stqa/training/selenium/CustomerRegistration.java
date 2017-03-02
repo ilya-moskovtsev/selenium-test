@@ -4,7 +4,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import test.utils.Customer;
+import test.utils.model.Customer;
 import test.utils.DataProviders;
 
 import java.util.Set;

@@ -1,6 +1,7 @@
 package test.utils;
 
 import com.tngtech.java.junit.dataprovider.DataProvider;
+import test.utils.model.Customer;
 
 import java.util.Random;
 

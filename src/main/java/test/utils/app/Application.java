@@ -1,4 +1,4 @@
-package test.utils;
+package test.utils.app;
 
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
@@ -11,14 +11,15 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import test.utils.*;
+import test.utils.model.Customer;
+import test.utils.pages.CustomersListPage;
+import test.utils.pages.RegistrationPage;
 
-import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 
-import static java.util.stream.Collectors.toSet;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 /**

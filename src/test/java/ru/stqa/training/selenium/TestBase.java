@@ -1,7 +1,7 @@
 package ru.stqa.training.selenium;
 
 import org.junit.Before;
-import test.utils.Application;
+import test.utils.app.Application;
 
 public class TestBase {
     public static ThreadLocal<Application> tlApp = new ThreadLocal<>();
