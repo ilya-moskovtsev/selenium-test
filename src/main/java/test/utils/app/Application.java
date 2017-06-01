@@ -19,6 +19,7 @@ import test.utils.Url;
 import test.utils.model.Customer;
 import test.utils.pages.*;
 
+import java.io.File;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -48,6 +49,12 @@ public class Application {
 
     public Application() {
         ChromeOptions chromeOptions = new ChromeOptions();
+
+        /**
+         * Try Google Chrome Portable
+         */
+        chromeOptions.setBinary(new File("src/browsers/GoogleChromePortable/GoogleChromePortable.exe").getAbsolutePath());
+
         chromeOptions.addArguments("start-fullscreen");
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
