@@ -51,9 +51,17 @@ public class Application {
         ChromeOptions chromeOptions = new ChromeOptions();
 
         /**
-         * Try Google Chrome Portable
+         * OSValidator
+         * https://www.mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
          */
-        chromeOptions.setBinary(new File("src/browsers/GoogleChromePortable/GoogleChromePortable.exe").getAbsolutePath());
+        if (System.getProperty("os.name")
+                .toLowerCase()
+                .indexOf("win") >= 0) {
+            /**
+             * Try Google Chrome Portable
+             */
+            chromeOptions.setBinary(new File("src/browsers/GoogleChromePortable/GoogleChromePortable.exe").getAbsolutePath());
+        }
 
         chromeOptions.addArguments("start-fullscreen");
         DesiredCapabilities cap = DesiredCapabilities.chrome();
